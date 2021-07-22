@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+<!--    <bean id="notifier" class="spring.person.messages.Notifier">-->
+<!--    </bean>-->
+
+    <bean id="walk" class="Walking">
+        <property name="walk" ref="alone"/>
+    </bean>
+
+    <bean id="withFriends" class="WalkingWithFriends">
+    </bean>
+
+    <bean id="withFamily" class="WalkingWithFamily">
+    </bean>
+
+    <bean id="alone" class="WalkingAlone">
+    </bean>
+
+    <bean id="notifier" class="Notifier">
+    </bean>
+
+    <aop:config>
+        <aop:aspect id="note" ref="notifier">
+            <aop:pointcut id="advice" expression="execution(* *.anyWalk())"/>
+            <aop:after method="after" pointcut-ref="advice"/>
+            <aop:before method="before" pointcut-ref="advice"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
